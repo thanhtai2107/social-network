@@ -3,6 +3,8 @@ import Navbar from "../components/Navbar";
 import Navigation from "../components/Navigation";
 import NewFeeds from "../components/NewFeeds";
 import RightPart from "../components/RightPart";
+import { Route, Routes } from "react-router-dom";
+import Profile from "../components/Profile";
 
 function HomePage() {
   return (
@@ -19,7 +21,10 @@ function HomePage() {
             lg={5.5}
             className="hidden lg:block w-full relative"
           >
-            <NewFeeds />
+            <Routes>
+              <Route path="/" element={<NewFeeds />} />
+              <Route path="/profile" element={<Profile />} />
+            </Routes>
           </Grid>
           <Grid
             item
