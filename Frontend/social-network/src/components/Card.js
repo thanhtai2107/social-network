@@ -1,9 +1,9 @@
-import * as React from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { Avatar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -11,10 +11,12 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import RepeatIcon from "@mui/icons-material/Repeat";
+import ReplyModal from "./ReplyModal";
 
 function Card() {
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [openReply, setOpenReply] = useState(false);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -22,7 +24,8 @@ function Card() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleOpenReply = () => {};
+  const handleOpenReply = () => setOpenReply(true);
+  const handleCloseReply = () => setOpenReply(false);
   const handleRepeat = () => {};
   const handleLike = () => {};
   return (
@@ -118,6 +121,9 @@ function Card() {
             </div>
           </div>
         </div>
+      </div>
+      <div>
+        <ReplyModal open={openReply} handleClose={handleCloseReply} />
       </div>
     </>
   );
