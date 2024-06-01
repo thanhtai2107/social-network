@@ -11,8 +11,11 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import Card from "./Card";
+import ProfileModal from "./ProfileModal";
 
 function Profile() {
+  const [openProfileModal, setOpenProfileModal] = useState(false);
+
   const [tabValue, setTabValue] = useState("1");
 
   const handleTabChange = (event, newTabValue) => {
@@ -22,7 +25,11 @@ function Profile() {
   const handleBack = () => {
     navigate(-1);
   };
-  const handleOpenEditProfile = () => {};
+  const handleOpenEditProfile = () => {
+    setOpenProfileModal(true);
+  };
+  const handleClose = () => setOpenProfileModal(false);
+
   return (
     <>
       <div>
@@ -140,6 +147,13 @@ function Profile() {
               <TabPanel value="4">Thích</TabPanel>
             </TabContext>
           </Box>
+        </section>
+
+        <section>
+          <ProfileModal
+            handleClose={handleClose}
+            handleOpen={openProfileModal}
+          />
         </section>
       </div>
     </>
