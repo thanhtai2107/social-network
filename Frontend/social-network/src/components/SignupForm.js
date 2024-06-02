@@ -5,37 +5,37 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import dayjs from "dayjs";
+import { useDispatch } from "react-redux";
+import { register } from "../redux/auth/Action";
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .email("Chưa đúng định dạng email")
     .required("Vui lòng nhập email"),
   password: Yup.string().required("Vui lòng nhập mật khẩu"),
+  confirmPassword: Yup.string()
+    .label("confirm password")
+    .required()
+    .oneOf([Yup.ref("password"), null], "Mật khẩu không khớp"),
 });
 
 function SignupForm() {
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       fullname: "",
       email: "",
       password: "",
+      confirmPassword: "",
       dateOfBirth: null,
     },
     validationSchema,
     onSubmit: (values) => {
-      // const { day, month, year } = values.dateOfBirth;
-      // const dayOfBirth = `${year}-${month}-${day}`;
       const dateOfBirth = values.dateOfBirth.$d.toLocaleDateString("en-CA");
       values.dateOfBirth = dateOfBirth;
+      dispatch(register(values));
       console.log("value", values);
     },
   });
-  // const handleDateChange = (name) => (event) => {
-  //   formik.setFieldValue("dateOfBirth", {
-  //     ...formik.values.dateOfBirth,
-  //     [name]: event.target.value,
-  //   });
-  // };
   return (
     <>
       <div>
@@ -76,6 +76,7 @@ function SignupForm() {
                 fullWidth
                 label="Mật khẩu"
                 name="password"
+                type="password"
                 variant="outlined"
                 size="large"
                 value={formik.values.password}
@@ -85,6 +86,27 @@ function SignupForm() {
                   formik.touched.password && Boolean(formik.errors.password)
                 }
                 helperText={formik.touched.password && formik.errors.password}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Nhập lại mật khẩu"
+                name="confirmPassword"
+                type="password"
+                variant="outlined"
+                size="large"
+                value={formik.values.confirmPassword}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.confirmPassword &&
+                  Boolean(formik.errors.confirmPassword)
+                }
+                helperText={
+                  formik.touched.confirmPassword &&
+                  formik.errors.confirmPassword
+                }
               />
             </Grid>
             <Grid item xs={12}>

@@ -10,8 +10,11 @@ import * as React from "react";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import Avatar from "@mui/material/Avatar";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/auth/Action";
 
 function Navbar() {
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -19,6 +22,10 @@ function Navbar() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handleLogout = () => {
+    dispatch(logout());
+    window.location.href = "/";
   };
   return (
     <>
@@ -146,7 +153,7 @@ function Navbar() {
               </ListItemIcon>
               Thông tin cá nhân
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={handleLogout}>
               <ListItemIcon>
                 <LogoutIcon fontSize="small" />
               </ListItemIcon>
