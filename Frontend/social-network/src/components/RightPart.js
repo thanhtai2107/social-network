@@ -1,8 +1,13 @@
 import { Avatar, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import SubcriptionModal from "./SubcriptionModal";
+import { useState } from "react";
 
 function RightPart() {
   const navigate = useNavigate();
+  const [openSub, setOpenReply] = useState(false);
+  const handleOpenSub = () => setOpenReply(true);
+  const handleCloseSub = () => setOpenReply(false);
   return (
     <>
       <div className="ml-7 border-[1px] rounded-xl h-36 p-4 bg-white">
@@ -18,8 +23,9 @@ function RightPart() {
           }}
           variant="contained"
           type="submit"
+          onClick={handleOpenSub}
         >
-          Xác thực
+          Đăng kí
         </Button>
       </div>
 
@@ -40,6 +46,9 @@ function RightPart() {
             </div>
           ))}
         </div>
+      </div>
+      <div>
+        <SubcriptionModal open={openSub} handleClose={handleCloseSub} />
       </div>
     </>
   );
